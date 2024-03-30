@@ -3,48 +3,54 @@ using namespace std;
 
 class Kontak {
 private:
-    string nama[10];
-    string no[10];
+    string nama[100];
+    string nomor[100];
     int jumlahKontak;
 
 public:
-    Kontak(string namaKontak[], string nomorTelepon[], int jumlah) {
-        for (int i = 0; i < jumlah; i++) {
-            nama[i] = namaKontak[i];
-            no[i] = nomorTelepon[i];
-        }
-        jumlahKontak = jumlah;
+    Kontak() {
+        jumlahKontak = 0;
     }
-	
-    ~Kontak() {
+
+    void tambahKontak(string namaBaru, string nomorBaru) {
+        nama[jumlahKontak] = namaBaru;
+        nomor[jumlahKontak] = nomorBaru;
+        jumlahKontak++;
+        cout << "Kontak berhasil ditambahkan.\n";
+    }
+
+    void tampilkanSemuaKontak() {
+        cout << "Daftar Kontak:\n";
         for (int i = 0; i < jumlahKontak; i++) {
-            cout << "Kontak ke-" << i + 1 << ": \n"
-                 << "Nama: " << nama[i] << "\nNomor telepon: " << no[i] << endl;
+            cout << "Kontak ke-" << i + 1 << ":\n"
+                 << "Nama: " << nama[i] << "\nNomor Telpon: " << nomor[i] << endl
+                 << "--------------------------------\n";
         }
     }
 };
 
 int main() {
-    string jawaban;
-    string namaKontak[10];
-    string nomorTelepon[10];
     int jumlahKontak = 0;
+    string nama;
+    string nomor;
+    char jawaban;
+    Kontak daftarKontak;
 
-    cout << "Masukkan kontak (Maksimal 10 kontak):\n";
     do {
-        cout << "\nKontak " << jumlahKontak + 1 << ":\n";
-        cout << "Nama: ";
-        cin.ignore();
-        getline(cin, namaKontak[jumlahKontak]);
-        cout << "Nomor telepon: ";
-        cin >> nomorTelepon[jumlahKontak];
-        cout << "Kontak berhasil ditambahkan." << endl;
-        cout << "\nTambahkan kontak lagi? (y/n): ";
-        cin >> jawaban;
-        jumlahKontak++;
-    } while ((jawaban == "y" || jawaban == "Y") && jumlahKontak < 10);
+        cout << "Masukan Nama Kontak ke-" << jumlahKontak + 1 << ": ";
+        getline(cin >> ws, nama);
+        cout << "Masukan Nomor: ";
+        getline(cin, nomor);
 
-    Kontak daftarKontak(namaKontak, nomorTelepon, jumlahKontak);
+        daftarKontak.tambahKontak(nama, nomor);
+        jumlahKontak++;
+
+        cout << "Tambahkan Kontak Lagi? (y/n)";
+        cin >> jawaban;
+        cin.ignore();
+    } while ((jawaban == 'y' || jawaban == 'Y') && jumlahKontak < 100);
+
+    daftarKontak.tampilkanSemuaKontak();
 
     return 0;
 }
